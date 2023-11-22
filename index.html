@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 꿈을 이루는 할 일 메모앱</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7d8aa; /* 파스텔톤의 배경색 */
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        #app {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #todo-form {
+            display: flex;
+            flex-direction: row; /* 입력 요소를 가로로 나열 */
+            align-items: center;
+            gap: 10px; /* 요소 사이의 간격 */
+            margin-bottom: 20px; /* 아래 여백 추가 */
+        }
+
+        input[type="text"],
+        input[type="date"],
+        button[type="submit"] {
+            flex: 1; /* 입력 요소가 동일한 너비로 나열됨 */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button[type="button"] {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>나의 꿈을 이루는 할 일 메모앱</h1>
+        <form id="todo-form">
+            <input type="text" id="todo-input" placeholder="할 일을 입력하세요">
+            <input type="date" id="date-input">
+            <button type="submit">추가</button>
+        </form>
+        <ul id="todo-list"></ul>
+    </div>
+
+    <script>
+        const todoForm = document.getElementById("todo-form");
+        const todoInput = document.getElementById("todo-input");
+        const dateInput = document.getElementById("date-input");
+        const todoList = document.getElementById("todo-list");
+
+        todoForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const todoText = todoInput.value;
+            const todoDate = dateInput.value;
+
+            if (todoText.trim() === "") return;
+
+            const todoItem = document.createElement("li");
+            todoItem.innerHTML = `
+                ${todoText} (${todoDate})
+                <button type="button">완료</button>
+            `;
+
+            todoList.appendChild(todoItem);
+
+            todoInput.value = "";
+            dateInput.value = "";
+
+            const completeButton = todoItem.querySelector("button[type='button']");
+            completeButton.addEventListener("click", function() {
+                todoList.removeChild(todoItem);
+                alert("참잘했어요!"); // 완료 버튼 클릭 시 팝업 창 표시
+            });
+        });
+    </script>
+</body>
+</html>
